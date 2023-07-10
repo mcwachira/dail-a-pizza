@@ -1,4 +1,15 @@
-function MenuItem({ pizza }) {
+import {formatCurrency} from "../utilities/helpers.ts";
+
+
+type Pizza = {
+    [key:string]:any,
+    id:string, name:string,
+    unitPrice:number,
+    ingredients:string,
+    soldOut:boolean,
+    imageUrl:string
+}
+function MenuItem({ pizza }:Pizza) {
   const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
 
   return (
