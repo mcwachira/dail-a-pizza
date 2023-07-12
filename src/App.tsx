@@ -4,6 +4,7 @@ import Home from "./features/ui/Home.tsx";
 import Menu from "./features/menu/Menu.tsx";
 import Cart from "./features/cart/Cart.tsx";
 import CreateOrder , {action as createOrderAAction} from "./features/order/CreateOrder.tsx";
+import  {action as updateOrderAAction} from "./features/order/UpdateOrder.tsx";
 import Order from "./features/order/Order.tsx";
 import AppLayout from "./features/ui/AppLayout.tsx";
 import {loader as menuLoader} from "./features/menu/Menu.tsx";
@@ -43,6 +44,7 @@ const router = createBrowserRouter([
                 element:<Order/>,
                 loader:orderLoader,
                 errorElement:<Error/>,
+                action:updateOrderAAction,
             }
         ]
     }
