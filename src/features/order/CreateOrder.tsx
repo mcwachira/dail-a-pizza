@@ -3,9 +3,11 @@ import {Form, redirect, useActionData, useNavigation} from "react-router-dom";
 import {createOrder} from "../services/apiRestaurant.ts";
 import Button from "../ui/Button.tsx";
 import {useSelector} from "react-redux";
-
+import {getCart, clearCart, getTotalCartPrice} from '../../redux/cart/cartSlice'
+import EmptyCart from "../cart/EmptyCart";
+import store from '../../redux/store'
 // https://uibakery.io/regex-library/phone-number
-const isValidPhone = (str) =>
+const isValidPhone = (str:string) =>
   /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(
     str
   );
@@ -39,12 +41,20 @@ function CreateOrder() {
   const navigation = useNavigation()
   const isSubmitting = navigation.state ==='submitting'
   const  {username} = useSelector((state) => state.user)
+  const [withPriority, setWithPriority] = useState(false);
+
+  const totalCartPrice= useSelector(getTotalCartPrice);
+  const priorityPrice = withPriority? totalCartPrice * 0.2 :0
+
 
   //form errors
 
   const formErrors  =useActionData()
-  // const [withPriority, setWithPriority] = useState(false);
-  const cart = fakeCart;
+  //
+  const cart = useSelector(getCart)
+
+  if(!cart.length) return <EmptyCart/>
+  console.log(cart)
 
   return (
     <div className='px-4 py-6'>
@@ -80,8 +90,8 @@ function CreateOrder() {
             type="checkbox"
             name="priority"
             id="priority"
-            // value={withPriority}
-            // onChange={(e) => setWithPriority(e.target.checked)}
+            value={withPriority}
+             onChange={(e) => setWithPriority(e.target.checked)}
           />
           <label htmlFor="priority" className='font-medium' >Want to yo give your order priority?</label>
         </div>
@@ -106,7 +116,7 @@ export const action = async({request}) => {
     const order = {
       ...data,
       cart:JSON.parse(data.cart),
-      priority:data.priority === 'om'
+      priority:data.priority === 'true'
     }
 
     console.log(order)
@@ -118,6 +128,9 @@ export const action = async({request}) => {
 
 
   const newOrder = await createOrder(order);
+
+  //just a hack
+  store.dispatch(clearCart())
     return  redirect(`/order/${newOrder.id}`)
 }
 
