@@ -23,7 +23,7 @@ function MenuItem({ pizza }:Pizza) {
 
     const currentQuantity =useSelector(getCurrentQuantityById(id))
 
-    console.log(currentQuantity)
+    // console.log(currentQuantity)
 
     const isInCart = currentQuantity >0
 
