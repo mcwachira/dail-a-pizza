@@ -1,7 +1,6 @@
 import {RouterProvider, createBrowserRouter} from "react-router-dom";
 import './App.css'
 import Home,{loader as menuLoader} from "./features/ui/Home.tsx";
-import Menu from "./features/menu/Menu.tsx";
 import Cart from "./features/cart/Cart.tsx";
 import CreateOrder , {action as createOrderAAction} from "./features/order/CreateOrder.tsx";
 import  {action as updateOrderAAction} from "./features/order/UpdateOrder.tsx";
@@ -11,6 +10,7 @@ import AppLayout from "./features/ui/AppLayout.tsx";
 import {loader as orderLoader} from './features/order/Order.tsx'
 
 import Error from "./features/ui/Error.tsx";
+import SignUp from "./features/ui/SignUp.tsx";
 
 
 const router = createBrowserRouter([
@@ -27,6 +27,12 @@ const router = createBrowserRouter([
                 errorElement:<Error/>,
             },
 
+            {
+                path:'/sign-in',
+                element:<SignUp/>,
+                loader:menuLoader,
+                errorElement:<Error/>,
+            },
             {
                 path:'/cart',
                 element:<Cart/>,
