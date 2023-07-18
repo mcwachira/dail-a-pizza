@@ -11,6 +11,7 @@ import {loader as orderLoader} from './features/order/Order.tsx'
 
 import Error from "./features/ui/Error.tsx";
 import SignUp from "./features/ui/SignUp.tsx";
+import SignIn from "./features/ui/SignIn.tsx";
 
 
 const router = createBrowserRouter([
@@ -28,8 +29,14 @@ const router = createBrowserRouter([
             },
 
             {
-                path:'/sign-in',
+                path:'/sign-up',
                 element:<SignUp/>,
+                loader:menuLoader,
+                errorElement:<Error/>,
+            },
+            {
+                path:'/sign-in',
+                element:<SignIn/>,
                 loader:menuLoader,
                 errorElement:<Error/>,
             },
